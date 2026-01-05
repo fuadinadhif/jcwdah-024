@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Position</title>
+    <style>
+      body {
+        font-family: monospace;
+        height: 500vh;
+      }
+
+      .container {
+        border: 2px dashed black;
+        margin: 8px 0px;
+        padding: 8px;
+      }
+
+      .box {
+        height: 100px;
+        width: 100px;
+        background: salmon;
+      }
+
+      .parent-box {
+        height: 300px;
+        background: brown;
+        position: relative;
+      }
+
+      .static {
+        position: static;
+        top: 100px;
+        left: 50px;
+      }
+
+      .relative {
+        position: relative;
+        /* bottom: 30px; */
+        top: 20px;
+        left: 20px;
+      }
+
+      .absolute {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+      }
+
+      .fixed {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Position</h1>
+
+    <!-- 1. Static -->
+    <section class="container">
+      <h2>1. Static</h2>
+      <div class="box static">Static</div>
+    </section>
+
+    <!-- 2.1 Relative -->
+    <section class="container">
+      <h2>2.1 Relative</h2>
+      <div class="box relative">Relative 2.1</div>
+    </section>
+
+    <!-- 2.2 Relative -->
+    <section class="container">
+      <h2>2.2 Relative</h2>
+      <div class="box relative" style="left: 100px">Relative 2.2</div>
+    </section>
+
+    <!-- 3. Absolute -->
+    <section class="container" style="position: relative">
+      <h2>3. Absolute</h2>
+      <div class="parent-box">
+        <div class="box absolute">Absolute</div>
+      </div>
+    </section>
+
+    <!-- 4. Fixed -->
+    <section class="container">
+      <h2>4. Fixed</h2>
+      <div class="box fixed">Fixed</div>
+    </section>
+  </body>
+</html>
+
+<!-- -------------------------------- NOTES
+CSS Position
+Cara mengatur posisi dari sebuah element menggunakan kombinasi position property:
+1. position (static, relative, absolute, fixed, sticky)
+2. top
+3. bottom
+4. left
+5. right
+
+Position Type:
+1. static: tidak ada pengaruh ke posisi
+2. relative: memposisikan element tergantung dengan posisi original
+3. absolute: memposisikan element berdasarkan posisi parent non static yang terdekat
+4. fixed: memposisikan element berdasarkan posisi layar/viewport
+-------------------------------- -->
