@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  background: rgba(242, 234, 226, 1);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-container {
+  background: white;
+  width: 600px;
+  height: 450px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+}
+
+.right {
+  padding: 32px;
+  font-family: "Montserrat";
+}
+
+.right h2 {
+  font-family: "Fraunces";
+}
+
+.right div span {
+  font-family: "Fraunces";
+}

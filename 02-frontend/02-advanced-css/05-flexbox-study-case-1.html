@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox Study Case 1</title>
+    <style>
+      header {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgb(13, 0, 47);
+        color: white;
+        font-family: sans-serif;
+        padding: 24px 42px;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        gap: 16px;
+      }
+
+      a {
+        color: white;
+        text-decoration: none;
+      }
+
+      button {
+        background: turquoise;
+        padding: 4px 12px;
+        border-radius: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. -->
+    <header>
+      <h1>LOGOBAKERY</h1>
+
+      <nav>
+        <ul>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+
+      <button>Contact</button>
+    </header>
+
+    <!-- 2. -->
+    <header>
+      <nav style="display: flex; gap: 16px">
+        <ul>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+
+        <button>Contact</button>
+      </nav>
+
+      <h1>LOGOBAKERY</h1>
+    </header>
+
+    <!-- 3. -->
+    <!-- <header></header> -->
+  </body>
+</html>
+
+<!-- -------------------------------- NOTES
+Tag pembungkus/wrapping tag:
+1. div: universal wrapper
+2. header: header wrapper
+3. main: main content wrapper
+4. footer: footer content wrapper
+5. section
+6. aside
+7. article 
+8. nav
+-------------------------------- -->

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animations</title>
+    <style>
+      .box {
+        width: 500px;
+        height: 500px;
+        background: hotpink;
+        transition: all 2s ease;
+        /* animation: opacity 2s infinite; */
+        border-radius: 50%;
+      }
+
+      .box:hover {
+        width: 500px;
+        height: 500px;
+        animation: opacity 2s infinite;
+      }
+
+      @keyframes bounceAndPulse {
+        0% {
+          transform: translateY(0);
+          transform: scale(0);
+        }
+
+        50% {
+          transform: translateY(100px);
+          transform: scale(3);
+        }
+
+        100% {
+          transform: translateY(0);
+          transform: scale(0);
+        }
+      }
+
+      @keyframes opacity {
+        0% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html>

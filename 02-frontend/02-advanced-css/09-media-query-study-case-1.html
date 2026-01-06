@@ -3,54 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flexbox</title>
+    <title>Document</title>
     <style>
-      body {
-        font-family: monospace;
-      }
-
       .parent-box {
-        border: 2px dashed black;
-        height: 25vh;
-        display: flex;
-        flex-direction: row;
-
-        /* main axis */
-        justify-content: center;
-
-        /* cross axis */
-        align-items: center;
-
-        gap: 8px;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
       }
 
       .children-box {
         height: 100px;
         width: 100px;
-        background: tomato;
-        border: 1px solid black;
-        font-size: 32px;
+        background: skyblue;
       }
 
-      div:nth-child(4) {
-        flex-grow: 1;
+      @media (max-width: 800px) {
+        .parent-box {
+          grid-template-columns: 1fr 1fr;
+        }
       }
 
-      div:nth-child(5) {
-        flex-grow: 2;
+      @media (max-width: 400px) {
+        .parent-box {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Flexbox Example</h1>
-
     <div class="parent-box">
       <div class="children-box">1</div>
       <div class="children-box">2</div>
       <div class="children-box">3</div>
       <div class="children-box">4</div>
       <div class="children-box">5</div>
+      <div class="children-box">6</div>
     </div>
   </body>
 </html>

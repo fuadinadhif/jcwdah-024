@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Study Case 1</title>
+    <style>
+      body {
+        font-family: monospace;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: auto 1fr auto;
+        margin: 0;
+      }
+
+      header {
+        background: orange;
+        grid-column: span 3;
+      }
+
+      nav {
+        background: greenyellow;
+      }
+
+      main {
+        background: pink;
+      }
+
+      aside {
+        background: yellow;
+      }
+
+      footer {
+        background: deeppink;
+        grid-column: span 3;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Header</header>
+    <nav>Navigation</nav>
+    <main>Holy Grail Layout</main>
+    <aside>Sider</aside>
+    <footer>Footer</footer>
+  </body>
+</html>
