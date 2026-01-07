@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+    <style>
+      /* Internal CSS */
+      body {
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to DOM</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis natus
+      illum quas nam deserunt. Ut fugiat quos qui voluptatem perferendis eveniet
+      iste corporis dolore unde quaerat dignissimos, reprehenderit dolor
+      voluptatibus?
+    </p>
+
+    <button id="white">Change to White</button>
+    <button id="red">Change to Red</button>
+    <button id="yellow">Change to Yellow</button>
+
+    <script>
+      // Internal JS
+      // console.log("Testing");
+      // console.log(document);
+
+      const bodyEl = document.getElementsByTagName("body");
+      const btnWhiteEl = document.getElementById("white");
+      const btnRedEl = document.getElementById("red");
+      const btnYellowEl = document.getElementById("yellow");
+
+      btnWhiteEl.addEventListener("click", () => {
+        bodyEl[0].style.backgroundColor = "white";
+      });
+
+      btnRedEl.addEventListener("click", () => {
+        bodyEl[0].style.backgroundColor = "red";
+      });
+
+      btnYellowEl.addEventListener("click", () => {
+        bodyEl[0].style.backgroundColor = "yellow";
+      });
+    </script>
+  </body>
+</html>
