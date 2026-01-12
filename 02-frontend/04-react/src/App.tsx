@@ -1,4 +1,4 @@
-import "./App.css";
+import styles from "./App.module.css";
 import Card from "./components/Card";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <main>
-      <h2>Hello, {fullName}!</h2>
+      <h2 className={styles.title}>Hello, {fullName}!</h2>
       <h2>Welcome to React!</h2>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio eum
