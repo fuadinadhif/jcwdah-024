@@ -8,6 +8,8 @@ interface ITodo {
   updatedAt: Date | null;
 }
 
+type TFilters = "ALL" | "ACTIVE" | "COMPLETED";
+
 const initialTodo: ITodo[] = [
   {
     id: 1,
@@ -34,18 +36,58 @@ const initialTodo: ITodo[] = [
 
 function App() {
   const [newTodo, setNewTodo] = useState("");
-  const [todos, setTodos] = useState(initialTodo);
+  const [todos, setTodos] = useState<ITodo[]>(initialTodo);
+  const [filter, setFilter] = useState<TFilters>("ALL");
+  const [isDark, setIsDark] = useState(false);
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "ACTIVE") {
+      return !todo.isCompleted;
+    } else if (filter === "COMPLETED") {
+      return todo.isCompleted;
+    } else {
+      return true;
+    }
+  });
+
+  function toggleCompleted(id: number) {
+    setTodos((previous) => {
+      const toggledTodos = previous.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, isCompleted: !todo.isCompleted };
+        } else {
+          return todo;
+        }
+      });
+
+      return toggledTodos;
+    });
+  }
+
+  function removeCompleted() {
+    const remainingTodos = todos.filter((todo) => !todo.isCompleted);
+    setTodos(remainingTodos);
+  }
 
   return (
-    <main>
+    <main
+      className={`${
+        isDark ? "dark" : ""
+      } bg-white text-black dark:bg-black dark:text-white`}
+    >
+      {/* Title */}
       <div>
         <h1>TODO</h1>
-        <button>🌙</button>
+        <button onClick={() => setIsDark(!isDark)}>
+          {isDark ? "🌞" : "🌛"}
+        </button>
       </div>
 
+      {/* Form Add */}
       <form
         onSubmit={(event) => {
           event.preventDefault();
+
           setTodos([
             ...todos,
             {
@@ -59,6 +101,8 @@ function App() {
               updatedAt: null,
             },
           ]);
+
+          setNewTodo("");
         }}
       >
         <input
@@ -71,11 +115,34 @@ function App() {
         />
       </form>
 
+      {/* Todo List */}
       <ul>
-        {todos.map((todo) => (
-          <li>{todo.title}</li>
+        {filteredTodos.map((todo) => (
+          <li>
+            <input
+              type="checkbox"
+              checked={todo.isCompleted}
+              onChange={() => toggleCompleted(todo.id)}
+            />
+            <span className={todo.isCompleted ? "line-through" : ""}>
+              {todo.title}
+            </span>
+          </li>
         ))}
       </ul>
+
+      {/* Status, Filter, Remove Button */}
+      <div>
+        <p>{todos.filter((todo) => !todo.isCompleted).length} items left</p>
+
+        <div>
+          <button onClick={() => setFilter("ALL")}>All</button>
+          <button onClick={() => setFilter("ACTIVE")}>Active</button>
+          <button onClick={() => setFilter("COMPLETED")}>Completed</button>
+        </div>
+
+        <button onClick={removeCompleted}>Clear Completed</button>
+      </div>
     </main>
   );
 }
