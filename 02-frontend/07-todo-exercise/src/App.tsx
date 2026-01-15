@@ -35,8 +35,24 @@ const initialTodo: ITodo[] = [
 ];
 
 function App() {
-  const [newTodo, setNewTodo] = useState("");
-  const [todos, setTodos] = useState<ITodo[]>(initialTodo);
+  const [newTodo, setNewTodo] = useState(() => {
+    const savedNewTodo = sessionStorage.getItem("newTodo");
+
+    if (savedNewTodo) {
+      return JSON.parse(savedNewTodo);
+    } else {
+      return "";
+    }
+  });
+  const [todos, setTodos] = useState<ITodo[]>(() => {
+    const savedTodos = localStorage.getItem("todos");
+
+    if (savedTodos) {
+      return JSON.parse(savedTodos);
+    } else {
+      return initialTodo;
+    }
+  });
   const [filter, setFilter] = useState<TFilters>("ALL");
   const [isDark, setIsDark] = useState(false);
 
@@ -67,6 +83,7 @@ function App() {
   function removeCompleted() {
     const remainingTodos = todos.filter((todo) => !todo.isCompleted);
     setTodos(remainingTodos);
+    localStorage.setItem("todos", JSON.stringify(remainingTodos));
   }
 
   return (
@@ -88,7 +105,7 @@ function App() {
         onSubmit={(event) => {
           event.preventDefault();
 
-          setTodos([
+          const updatedTodos = [
             ...todos,
             {
               id:
@@ -100,7 +117,10 @@ function App() {
               createdAt: new Date(),
               updatedAt: null,
             },
-          ]);
+          ];
+
+          setTodos(updatedTodos);
+          localStorage.setItem("todos", JSON.stringify(updatedTodos));
 
           setNewTodo("");
         }}
@@ -111,6 +131,10 @@ function App() {
           value={newTodo}
           onChange={(event) => {
             setNewTodo(event.target.value);
+            sessionStorage.setItem(
+              "newTodo",
+              JSON.stringify(event.target.value)
+            );
           }}
         />
       </form>
