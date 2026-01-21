@@ -1,5 +1,6 @@
-import { useParams } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+// import { type Article } from "../types/article.type";
 
 interface Article {
   objectId: string;
@@ -10,8 +11,11 @@ interface Article {
 
 function DetailPage() {
   const [article, setArticle] = useState<Article | null>(null);
+
   const params = useParams();
   const objectId = params.objectId;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getArticle() {
@@ -26,9 +30,27 @@ function DetailPage() {
     getArticle();
   }, []);
 
+  async function handleDelete() {
+    const response = await fetch(
+      `https://desiredwinter-us.backendless.app/api/data/articles/${objectId}`,
+      { method: "DELETE" },
+    );
+
+    if (response.ok) {
+      alert("Article deleted!");
+      navigate("/");
+    } else {
+      alert("Failed to delete article");
+    }
+  }
+
   return (
     <main>
-      <img src={article?.image} alt="" />
+      <div>
+        <Link to={`/update/${objectId}`}>Update</Link>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
+      <img src={article?.image} alt="" style={{ width: "100%" }} />
       <h1>{article?.title}</h1>
       <p>{article?.content}</p>
     </main>

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
 import CreatePage from "./pages/CreatePage";
+import UpdatePage from "./pages/UpdatePage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />
+        <Route path="/update/:objectId" element={<UpdatePage />} />
         <Route path="/article/:objectId" element={<DetailPage />} />
       </Routes>
     </BrowserRouter>
