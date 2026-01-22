@@ -25,14 +25,14 @@ function HomePage() {
   }, []);
 
   return (
-    <main>
-      <h1>Home Page</h1>
+    <main className="p-8">
+      <h1 className="text-center text-3xl mb-4">Home Page</h1>
 
-      <section style={{ display: "flex", overflowX: "scroll", width: "50vw" }}>
+      <section className="flex flex-col gap-8 items-center m-auto  w-[70vw] sm:flex-row sm:overflow-x-scroll">
         {articles?.map((item) => (
-          <div>
-            <img src={item.image} alt="" style={{ height: "200px" }} />
-            <h2>{item.title}</h2>
+          <div className="min-w-[400px]">
+            <img src={item.image} alt="" />
+            <h2 className="text-xl">{item.title}</h2>
             <Link to={`/article/${item.objectId}`}>Read more</Link>
           </div>
         ))}
