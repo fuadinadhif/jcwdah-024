@@ -3,12 +3,14 @@ import express, {
   type Request,
   type Response,
 } from "express";
+import cors from "cors";
 
 import { prisma } from "./lib/prisma.js";
 
 const app: Application = express();
 const PORT: number = 8000;
 
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 /* -------------------------------------------------------------------------- */
@@ -80,6 +82,24 @@ app.delete("/api/users/:userId", async (req: Request, res: Response) => {
   const userId = Number(req.params.userId);
   await prisma.user.delete({ where: { id: userId } });
   res.status(200).json({ message: `User with id: ${userId} deleted` });
+});
+
+/* -------------------------------------------------------------------------- */
+/*                               EVENT ENDPOINTS                              */
+/* -------------------------------------------------------------------------- */
+/* ---------------------------- 1. Create (POST) ---------------------------- */
+
+/* --------------------------- 2.1 Read Many (GET) -------------------------- */
+app.get("/api/events", async (req: Request, res: Response) => {
+  const result = await prisma.event.findMany();
+  res.status(200).json(result);
+});
+
+/* -------------------------- 2.2 Read Single (GET) ------------------------- */
+app.get("/api/events/:eventId", async (req: Request, res: Response) => {
+  const eventId = Number(req.params.eventId);
+  const result = await prisma.event.findUnique({ where: { id: eventId } });
+  res.status(200).json(result);
 });
 
 app.listen(PORT, () => console.info(`Server is listening on port: ${PORT}`));

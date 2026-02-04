@@ -26,4 +26,29 @@ model User {
   role      Role     @default(CUSTOMER)
   address   String?
   createdAt DateTime @default(now())
+
+  Events Event[] // 1 to many
+  Wallet Wallet? // 1 to 1
+}
+
+model Event {
+  id               Int      @id @default(autoincrement())
+  eventOrganizerId Int
+  title            String
+  description      String
+  imageUrl         String
+  price            Decimal  @db.Decimal(10, 2)
+  createdAt        DateTime @default(now())
+
+  EventOrganizer User @relation(fields: [eventOrganizerId], references: [id])
+}
+
+model Wallet {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  balance   Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User User @relation(fields: [userId], references: [id])
 }
