@@ -7,5 +7,10 @@ export const API_ENDPOINTS = {
     REFRESH: "/auth/refresh",
   },
   EVENTS: {},
-  USERS: {},
+  CUSTOMER: {
+    PROFILE: "/users/customer/profile",
+  },
+  ORGANIZER: {
+    PROFILE: "/users/organizer/profile",
+  },
 };

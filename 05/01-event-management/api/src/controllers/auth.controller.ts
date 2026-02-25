@@ -23,9 +23,9 @@ export async function loginController(req: Request, res: Response) {
   try {
     const userInput = req.body;
 
-    const accessToken = await loginService(userInput);
+    const { accessToken, user } = await loginService(userInput);
 
-    res.status(200).json({ message: "User logged in", accessToken });
+    res.status(200).json({ message: "User logged in", accessToken, user });
   } catch (error) {
     if (error instanceof AppError) {
       res

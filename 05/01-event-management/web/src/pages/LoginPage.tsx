@@ -1,27 +1,22 @@
-import { apiClient } from "@/api/client";
-import { API_ENDPOINTS } from "@/api/endpoints";
 import { useState } from "react";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/auth-store";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const login = useAuthStore((state) => state.login);
+
   async function handleSubmit(event: React.SubmitEvent) {
     event.preventDefault();
 
     try {
-      const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, {
-        email,
-        password,
-      });
-
-      localStorage.removeItem("accessToken");
-      localStorage.setItem("accessToken", data.accessToken);
+      await login({ email, password });
     } catch (error) {
       console.error(error);
     }

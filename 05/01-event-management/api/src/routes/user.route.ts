@@ -9,10 +9,10 @@ import { verifyToken, roleGuard } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router
-  .route("/profile/customer")
+  .route("/customer/profile")
   .get(verifyToken, roleGuard("CUSTOMER"), getCustomerById);
 router
-  .route("/profile/organizer")
+  .route("/organizer/profile")
   .get(verifyToken, roleGuard("ORGANIZER"), getOrganizerById);
 
 export default router;

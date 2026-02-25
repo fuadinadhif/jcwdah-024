@@ -1,19 +1,24 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import { registerSchema } from "../validations/register.validation.js";
+
 import { prisma } from "../lib/prisma.js";
 import type { UserCreateInput } from "../generated/prisma/models.js";
 import { AppError } from "../utils/app-error.js";
 
 export async function registerService(userInput: UserCreateInput) {
-  console.log(userInput);
+  console.log(1);
+  const parsedUserInput = registerSchema.parse(userInput);
+
+  console.log(parsedUserInput);
 
   function generateReferralCode(name: string) {
     return name.slice(0, 4) + String(Date.now()).slice(0, 4);
   }
 
   const existingUser = await prisma.user.findUnique({
-    where: { email: userInput.email },
+    where: { email: parsedUserInput.email },
   });
 
   if (existingUser) {
@@ -22,10 +27,10 @@ export async function registerService(userInput: UserCreateInput) {
 
   const userData = await prisma.user.create({
     data: {
-      email: userInput.email,
-      name: userInput.name,
-      password: await bcrypt.hash(userInput.password, 10),
-      referralCode: generateReferralCode(userInput.name),
+      email: parsedUserInput.email,
+      name: parsedUserInput.name,
+      password: await bcrypt.hash(parsedUserInput.password, 10),
+      referralCode: generateReferralCode(parsedUserInput.name),
     },
   });
 
@@ -63,5 +68,5 @@ export async function loginService(userInput: {
     expiresIn: "1h",
   });
 
-  return accessToken;
+  return { accessToken, user: existingUser };
 }
