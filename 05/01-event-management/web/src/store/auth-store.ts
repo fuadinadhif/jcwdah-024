@@ -22,16 +22,24 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: false,
 
         login: async ({ email, password }) => {
-          const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, {
-            email,
-            password,
-          });
+          try {
+            const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, {
+              email,
+              password,
+            });
+            console.log(response);
 
-          set({
-            accessToken: data.accessToken,
-            user: data.user,
-            isAuthenticated: true,
-          });
+            set({
+              accessToken: response.data.accessToken,
+              user: response.data.user,
+              isAuthenticated: true,
+            });
+
+            return response;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
         },
       };
     },

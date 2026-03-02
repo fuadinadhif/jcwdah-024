@@ -16,13 +16,15 @@ export default function LoginPage() {
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validate: toFormikValidate(loginSchema),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
-        login(values);
+        const result = await login(values);
+        console.log(result);
+
         toast.info("Login success");
       } catch (error) {
         console.error(error);
-        toast.error("Login error");
+        toast.error("Login error", { position: "top-center" });
       }
     },
   });

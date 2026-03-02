@@ -29,4 +29,48 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  Events Event[]
+  Wallet Wallet?
+}
+
+model Event {
+  id          Int     @id @default(autoincrement())
+  organizerId Int
+  title       String  @unique
+  location    String
+  image       String?
+  price       Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  User User @relation(fields: [organizerId], references: [id])
+
+  EventImages EventImage[]
+}
+
+model EventImage {
+  id      Int    @id @default(autoincrement())
+  eventId Int
+  url     String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  Event Event @relation(fields: [eventId], references: [id])
+}
+
+model Wallet {
+  id      Int     @id @default(autoincrement())
+  userId  Int     @unique
+  balance Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  User User @relation(fields: [userId], references: [id])
 }

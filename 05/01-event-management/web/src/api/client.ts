@@ -3,8 +3,6 @@ import axios from "axios";
 export const apiClient = axios.create({ baseURL: "http://localhost:8888/api" });
 
 apiClient.interceptors.request.use((config) => {
-  console.log(config);
-
   const authStore = JSON.parse(localStorage.getItem("auth-store")!);
 
   if (!authStore) {
