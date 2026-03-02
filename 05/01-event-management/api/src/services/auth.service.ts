@@ -1,21 +1,22 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import { registerSchema } from "../validations/register.validation.js";
+import { loginSchema, registerSchema } from "../validations/auth.validation.js";
 
 import { prisma } from "../lib/prisma.js";
 import type { UserCreateInput } from "../generated/prisma/models.js";
 import { AppError } from "../utils/app-error.js";
+import { sendEmail } from "../utils/email.js";
 
 export async function registerService(userInput: UserCreateInput) {
-  console.log(1);
-  const parsedUserInput = registerSchema.parse(userInput);
-
-  console.log(parsedUserInput);
-
   function generateReferralCode(name: string) {
     return name.slice(0, 4) + String(Date.now()).slice(0, 4);
   }
+
+  const parsedUserInput = registerSchema.parse({
+    ...userInput,
+    referralCode: generateReferralCode(userInput.name),
+  });
 
   const existingUser = await prisma.user.findUnique({
     where: { email: parsedUserInput.email },
@@ -30,8 +31,19 @@ export async function registerService(userInput: UserCreateInput) {
       email: parsedUserInput.email,
       name: parsedUserInput.name,
       password: await bcrypt.hash(parsedUserInput.password, 10),
-      referralCode: generateReferralCode(parsedUserInput.name),
+      referralCode: parsedUserInput.referralCode,
     },
+  });
+
+  sendEmail({
+    from: "onboarding@purwadhika.my.id",
+    to: parsedUserInput.email,
+    subject: "Welcome!",
+    emailData: {
+      name: parsedUserInput.name,
+      referralCode: parsedUserInput.referralCode,
+    },
+    emailTemplate: "src/templates/emails/welcome.template.hbs",
   });
 
   return userData;
@@ -41,8 +53,10 @@ export async function loginService(userInput: {
   email: string;
   password: string;
 }) {
+  const parsedUserInput = loginSchema.parse(userInput);
+
   const existingUser = await prisma.user.findUnique({
-    where: { email: userInput.email },
+    where: { email: parsedUserInput.email },
   });
 
   if (!existingUser) {
@@ -50,7 +64,7 @@ export async function loginService(userInput: {
   }
 
   const isValidPassword = await bcrypt.compare(
-    userInput.password,
+    parsedUserInput.password,
     existingUser.password,
   );
 

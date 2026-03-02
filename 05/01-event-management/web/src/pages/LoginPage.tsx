@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useFormik } from "formik";
+import { toFormikValidate } from "zod-formik-adapter";
+import { toast } from "sonner";
+
+import { loginSchema } from "@/validations/auth.validation";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -7,20 +11,21 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth-store";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const login = useAuthStore((state) => state.login);
 
-  async function handleSubmit(event: React.SubmitEvent) {
-    event.preventDefault();
-
-    try {
-      await login({ email, password });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validate: toFormikValidate(loginSchema),
+    onSubmit: (values) => {
+      try {
+        login(values);
+        toast.info("Login success");
+      } catch (error) {
+        console.error(error);
+        toast.error("Login error");
+      }
+    },
+  });
 
   return (
     <main>
@@ -30,7 +35,7 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             {/* Email */}
             <div>
               <Label htmlFor="email">Email</Label>
@@ -38,10 +43,10 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="yours@mail.com"
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
               />
+              {<p className="text-red-500 text-xs">{formik.errors.email}</p>}
             </div>
 
             {/* Password */}
@@ -51,10 +56,10 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="*****"
-                required
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
               />
+              {<p className="text-red-500 text-xs">{formik.errors.password}</p>}
             </div>
 
             <Button type="submit">Login</Button>
