@@ -32,10 +32,12 @@ export function roleGuard(role: "ORGANIZER" | "CUSTOMER") {
       return res.status(401).json({ message: "Unauthenticated" });
     }
 
+    console.log(req.user);
+
     if (req.user.role === role) {
-      next();
+      return next();
     }
 
-    res.status(403).json({ message: "Forbidden" });
+    return res.status(403).json({ message: "Forbidden" });
   };
 }

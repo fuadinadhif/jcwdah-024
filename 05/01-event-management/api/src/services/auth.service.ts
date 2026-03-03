@@ -73,6 +73,7 @@ export async function loginService(userInput: {
   }
 
   const payload = {
+    id: existingUser.id,
     email: existingUser.email,
     name: existingUser.name,
     role: existingUser.role,
