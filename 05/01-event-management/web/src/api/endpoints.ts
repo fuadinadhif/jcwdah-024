@@ -6,7 +6,9 @@ export const API_ENDPOINTS = {
     ME: "/auth/me",
     REFRESH: "/auth/refresh",
   },
-  EVENTS: {},
+  EVENTS: {
+    CREATE: "/events",
+  },
   CUSTOMER: {
     PROFILE: "/users/customer/profile",
   },

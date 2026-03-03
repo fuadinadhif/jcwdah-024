@@ -14,6 +14,7 @@ import OrganizerProfilePage from "./pages/OrganizerProfilePage";
 import AuthRoute from "./routes/AuthRoute";
 import CustomerRoute from "./routes/CustomerRoute";
 import OrganizerRoute from "./routes/OrganizerRoute";
+import CreateEventPage from "./pages/CreateEventPage";
 
 export default function App() {
   return (
@@ -37,6 +38,10 @@ export default function App() {
               <Route
                 path="organizer/profile"
                 element={<OrganizerProfilePage />}
+              />
+              <Route
+                path="organizer/event/create"
+                element={<CreateEventPage />}
               />
             </Route>
           </Route>
