@@ -4,6 +4,7 @@ import type { EventCreateInput } from "../generated/prisma/models.js";
 
 import { cloudinary } from "../lib/cloudinary.js";
 import { prisma } from "../lib/prisma.js";
+import { redis } from "../lib/redis.js";
 
 /* ------------------------------ UPLOAD SINGLE ----------------------------- */
 export async function createEventService(
@@ -23,6 +24,7 @@ export async function createEventService(
     });
   } finally {
     await fs.unlink(file.path);
+    await redis.del("events");
   }
 }
 

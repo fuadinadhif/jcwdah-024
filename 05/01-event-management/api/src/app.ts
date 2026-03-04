@@ -10,9 +10,12 @@ import cors from "cors";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import eventRoutes from "./routes/event.route.js";
+import orderRoutes from "./routes/order.route.js";
 
 import { notFound } from "./middlewares/not-found.middleware.js";
 import { error } from "./middlewares/error.middleware.js";
+
+import "./crons/order.cron.js";
 
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 8000;
@@ -29,6 +32,7 @@ app.get("/api/health", (req: Request, res: Response) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.use(notFound);
 app.use(error);
