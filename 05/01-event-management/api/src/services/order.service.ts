@@ -1,6 +1,7 @@
 import { OrderStatus } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/prisma.js";
 import { AppError } from "../utils/app-error.js";
+import { orderQueue } from "../queues/order.queue.js";
 
 export async function createOrderService(
   totalAmount: number,
@@ -16,6 +17,15 @@ export async function createOrderService(
   const order = await prisma.order.create({
     data: { totalAmount, eventId, customerId },
   });
+
+  await orderQueue.add(
+    "expire-unpaid-orders",
+    { orderId: order.id },
+    {
+      delay: 1000 * 20,
+      jobId: `expire-${order.id}`,
+    },
+  );
 
   return order;
 }
@@ -36,6 +46,8 @@ export async function payOrderService(orderId: number) {
     data: { status: "PAID" },
   });
 
+  await orderQueue.remove(`expire-${order.id}`);
+
   return updated;
 }
 
@@ -53,4 +65,21 @@ export async function expireUnpaidOrdersService() {
   });
 
   return expiredOrders;
+}
+
+export async function expireUnpaidSingleOrderService(orderId: number) {
+  const order = await prisma.order.findUnique({ where: { id: orderId } });
+
+  if (!order) {
+    return;
+  }
+
+  if (order.status === "WAITING_PAYMENT") {
+    const result = await prisma.order.update({
+      where: { id: orderId },
+      data: { status: "EXPIRED" },
+    });
+
+    return result;
+  }
 }

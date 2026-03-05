@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { ZodError, z } from "zod";
 
 import { AppError } from "../utils/app-error.js";
+import { logger } from "../utils/logger.js";
 
 export function error(
   error: unknown,
@@ -9,7 +10,7 @@ export function error(
   res: Response,
   next: NextFunction,
 ) {
-  console.error(error);
+  logger.error(error.message);
 
   if (error instanceof AppError) {
     return res
