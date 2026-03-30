@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
 // Page
-import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/guest/LoginPage";
+import HomePage from "./pages/public/HomePage";
+import AboutPage from "./pages/public/AboutPage";
+import CreateEventPage from "./pages/organizer/CreateEventPage";
+import CustomerProfilePage from "./pages/customer/CustomerProfilePage";
+import OrganizerProfilePage from "./pages/organizer/OrganizerProfilePage";
 
 // Layout
 import RootLayout from "./layouts/RootLayout";
 import GuestRoute from "./routes/GuestRoute";
-import CustomerProfilePage from "./pages/CustomerProfilePage";
-import OrganizerProfilePage from "./pages/OrganizerProfilePage";
 
 // Route
 import AuthRoute from "./routes/AuthRoute";
 import CustomerRoute from "./routes/CustomerRoute";
 import OrganizerRoute from "./routes/OrganizerRoute";
-import CreateEventPage from "./pages/CreateEventPage";
 
 export default function App() {
   return (
@@ -22,10 +23,7 @@ export default function App() {
       <Routes>
         <Route element={<RootLayout />}>
           <Route index element={<HomePage />} />
-
-          <Route element={<GuestRoute />}>
-            <Route path="auth/login" element={<LoginPage />} />
-          </Route>
+          <Route path="about" element={<AboutPage />} />
 
           <Route element={<AuthRoute />}>
             <Route element={<CustomerRoute />}>
@@ -40,11 +38,15 @@ export default function App() {
                 element={<OrganizerProfilePage />}
               />
               <Route
-                path="organizer/event/create"
+                path="organizer/events/create"
                 element={<CreateEventPage />}
               />
             </Route>
           </Route>
+        </Route>
+
+        <Route element={<GuestRoute />}>
+          <Route path="auth/login" element={<LoginPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
