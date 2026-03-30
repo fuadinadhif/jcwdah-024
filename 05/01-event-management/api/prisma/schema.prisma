@@ -18,6 +18,12 @@ enum Role {
   ORGANIZER
 }
 
+enum OrderStatus {
+  WAITING_PAYMENT
+  PAID
+  EXPIRED
+}
+
 model User {
   id           Int    @id @default(autoincrement())
   name         String
@@ -32,6 +38,7 @@ model User {
 
   Events Event[]
   Wallet Wallet?
+  Orders Order[]
 }
 
 model Event {
@@ -49,6 +56,7 @@ model Event {
   User User @relation(fields: [organizerId], references: [id])
 
   EventImages EventImage[]
+  Orders      Order[]
 }
 
 model EventImage {
@@ -73,4 +81,17 @@ model Wallet {
   deletedAt DateTime?
 
   User User @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  eventId     Int
+  customerId  Int
+  totalAmount Decimal     @db.Decimal(10, 2)
+  status      OrderStatus @default(WAITING_PAYMENT)
+
+  createdAt DateTime @default(now())
+
+  Event    Event @relation(fields: [eventId], references: [id])
+  Customer User  @relation(fields: [customerId], references: [id])
 }

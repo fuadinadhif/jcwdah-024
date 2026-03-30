@@ -1,0 +1,25 @@
+{
+  "level": "info",
+  "message": "Server is listening on port: 8888",
+  "meta": {
+    "timestamp": "2026-03-05T14:47:33.466Z"
+  }
+}{
+  "level": "info",
+  "message": "Server is listening on port: 8888",
+  "meta": {
+    "timestamp": "2026-03-05T14:47:51.362Z"
+  }
+}{
+  "level": "info",
+  "message": "Server is listening on port: 8888",
+  "meta": {
+    "timestamp": "2026-03-05T14:48:33.605Z"
+  }
+}{
+  "level": "error",
+  "message": "User not found. Please register first",
+  "meta": {
+    "timestamp": "2026-03-05T14:49:18.792Z"
+  }
+}
