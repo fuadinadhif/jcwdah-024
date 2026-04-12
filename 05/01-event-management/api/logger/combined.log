@@ -22,4 +22,10 @@
   "meta": {
     "timestamp": "2026-03-05T14:49:18.792Z"
   }
+}{
+  "level": "info",
+  "message": "Server is listening on port: 8888",
+  "meta": {
+    "timestamp": "2026-03-30T12:37:48.523Z"
+  }
 }
